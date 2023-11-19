@@ -1,0 +1,149 @@
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { RootStackParamList } from '../../../../App';
+import Button from '../../components/button';
+import Input from '../../components/input';
+import { COLORS } from '../../theme/app-theme';
+import useHomeViewModel from './use-home-view-model';
+
+export default function HomeScreen() {
+
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const { email, password, onChange } = useHomeViewModel();
+
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.imageBackground}
+        source={require('../../../../assets/chef.jpg')}
+      />
+
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logoImage}
+          source={require('../../../../assets/logo.png')}
+        />
+        <Text style={styles.logoText}>
+          Food App
+        </Text>
+      </View>
+
+      <View style={styles.form}>
+        <Text style={styles.formText}>
+          Sign in
+        </Text>
+        <Input
+          placeholder='Email'
+          keyboardType='email-address'
+          image={require('../../../../assets/email.png')}
+          property={'email'}
+          value={email}
+          onChange={onChange}
+        />
+        <Input
+          placeholder='Password'
+          keyboardType='default'
+          image={require('../../../../assets/password.png')}
+          value={password}
+          property={'password'}
+          onChange={onChange}
+          secureTextEntry
+        />
+        <View style={{ marginTop: 20 }}>
+          <Button
+            text='Login'
+            onPress={() => console.log('email', email, 'password', password)}
+          />
+        </View>
+        <View style={styles.formRegister}>
+          <Text>
+            Don't have an account?
+          </Text>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Register')}
+          >
+            <Text style={styles.registerText}>
+              Register
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  imageBackground: {
+    width: '100%',
+    height: '100%',
+    opacity: 0.7,
+    bottom: '30%'
+  },
+  logoContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: '15%',
+  },
+  logoImage: {
+    width: 100,
+    height: 100
+  },
+  logoText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 16,
+    marginTop: 10,
+    marginRight: 10,
+    fontWeight: 'bold',
+    textTransform: 'uppercase'
+  },
+  form: {
+    width: '100%',
+    height: 'auto',
+    backgroundColor: 'white',
+    position: 'absolute',
+    bottom: 0,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20
+  },
+  formText: {
+    fontWeight: 'bold',
+    fontSize: 20
+  },
+  formInput: {
+    flexDirection: 'row',
+    marginTop: 20,
+    alignItems: 'center',
+    gap: 15
+  },
+  formTextInput: {
+    flex: 1,
+    borderBottomWidth: 1,
+    borderColor: '#aaa',
+    paddingHorizontal: 10,
+    paddingBottom: 5
+  },
+  formIcon: {
+    width: 25,
+    height: 25
+  },
+  formRegister: {
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10
+  },
+  registerText: {
+    color: COLORS.primary,
+    fontWeight: 'bold',
+    borderBottomWidth: 1,
+    borderColor: 'orange'
+  }
+});
