@@ -87,8 +87,9 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'absolute',
-    alignSelf: 'center',
     top: '15%',
+    alignSelf: 'center',
+    alignItems: 'center',
   },
   logoImage: {
     width: 100,
@@ -99,7 +100,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     marginTop: 10,
-    marginRight: 10,
     fontWeight: 'bold',
     textTransform: 'uppercase'
   },

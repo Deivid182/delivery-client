@@ -1,14 +1,24 @@
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { RootStackParamList } from '../../../../App';
 import Button from '../../components/button';
+import Input from '../../components/input';
 import { COLORS } from '../../theme/app-theme';
+import useRegisterViewModel from './use-register-view-model';
 
 export default function RegisterScreen() {
-
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  const { email, password, lastName, firstName, phone, confirmPassword, onChange } =
+    useRegisterViewModel();
 
   return (
     <View style={styles.container}>
@@ -22,104 +32,75 @@ export default function RegisterScreen() {
           style={styles.logoImage}
           source={require('../../../../assets/user_image.png')}
         />
-        <Text style={styles.logoText}>
-          Choose a picture
-        </Text>
+        <Text style={styles.logoText}>Choose a picture</Text>
       </View>
 
       <View style={styles.form}>
-        <Text style={styles.formText}>
-          Register
-        </Text>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require('../../../../assets/user.png')}
-          />
-          <TextInput 
-            placeholder='First Name'
-            style={styles.formTextInput} 
-            keyboardType='default'
-          />
-        </View>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require('../../../../assets/my_user.png')}
-          />
-          <TextInput 
-            placeholder='Last Name'
-            style={styles.formTextInput} 
-            keyboardType='default'
-          />
-        </View>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require('../../../../assets/email.png')}
-          />
-          <TextInput 
-            placeholder='Email'
-            style={styles.formTextInput} 
-            keyboardType='email-address'
-          />
-        </View>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require('../../../../assets/phone.png')}
-          />
-          <TextInput 
-            placeholder='Phone Number'
-            style={styles.formTextInput} 
-            keyboardType='number-pad'
-          />
-        </View>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require('../../../../assets/password.png')}
-          />
-          <TextInput 
-            placeholder='Password'
-            style={styles.formTextInput} 
-            keyboardType='default'
-            secureTextEntry
-          />
-        </View>
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require('../../../../assets/confirm_password.png')}
-          />
-          <TextInput 
-            placeholder='Confirm Password'
-            style={styles.formTextInput} 
-            keyboardType='default'
-            secureTextEntry
-          />
-        </View>
+        <Text style={styles.formText}>Register</Text>
+        <Input
+          placeholder='First Name'
+          keyboardType='default'
+          image={require('../../../../assets/user.png')}
+          property={'email'}
+          value={email}
+          onChange={onChange}
+        />
+        <Input
+          placeholder='Last Name'
+          keyboardType='default'
+          image={require('../../../../assets/my_user.png')}
+          property='lastName'
+          value={lastName}
+          onChange={onChange}
+        />
+        <Input
+          placeholder='Email Address'
+          keyboardType='email-address'
+          image={require('../../../../assets/email.png')}
+          property='email'
+          value={email}
+          onChange={onChange}
+        />
+        <Input
+          placeholder='Phone Number'
+          keyboardType='number-pad'
+          image={require('../../../../assets/phone.png')}
+          property='phone'
+          value={phone}
+          onChange={onChange}
+        />
+
+        <Input
+          placeholder='Password'
+          keyboardType='default'
+          image={require('../../../../assets/password.png')}
+          property='password'
+          value={password}
+          onChange={onChange}
+          secureTextEntry
+        />
+
+        <Input
+          placeholder='Confirm Password'
+          keyboardType='default'
+          image={require('../../../../assets/confirm_password.png')}
+          property='confirmPassword'
+          value={confirmPassword}
+          onChange={onChange}
+          secureTextEntry
+        />
         <View style={{ marginTop: 20 }}>
-          <Button
-            text='Confirm'
-            onPress={() => console.log('Login')}
-          />
+          <Button text='Confirm' onPress={() => console.log('Login')} />
         </View>
         <View style={styles.formRegister}>
-          <Text>
-            Already have an account?
-          </Text>
-          <TouchableOpacity
-            onPress={() => navigation.navigate('Home')}
-          >
-            <Text style={styles.registerText}>
-              Log in
-            </Text>
+          <Text>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
+            <Text style={styles.registerText}>Log in</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <StatusBar style="auto" />
+      <StatusBar style='auto' />
     </View>
   );
 }
@@ -133,7 +114,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     opacity: 0.7,
-    bottom: '30%'
+    bottom: '30%',
   },
   logoContainer: {
     position: 'absolute',
@@ -143,7 +124,7 @@ const styles = StyleSheet.create({
   },
   logoImage: {
     width: 100,
-    height: 100
+    height: 100,
   },
   logoText: {
     color: 'white',
@@ -152,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 10,
     fontWeight: 'bold',
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
   },
   form: {
     width: '100%',
@@ -162,39 +143,39 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    padding: 20
+    padding: 20,
   },
   formText: {
     fontWeight: 'bold',
-    fontSize: 20
+    fontSize: 20,
   },
   formInput: {
     flexDirection: 'row',
     marginTop: 20,
     alignItems: 'center',
-    gap: 15
+    gap: 15,
   },
   formTextInput: {
     flex: 1,
     borderBottomWidth: 1,
     borderColor: '#aaa',
     paddingHorizontal: 10,
-    paddingBottom: 5
+    paddingBottom: 5,
   },
   formIcon: {
     width: 25,
-    height: 25
+    height: 25,
   },
   formRegister: {
     marginTop: 20,
     flexDirection: 'row',
     justifyContent: 'center',
-    gap: 10
+    gap: 10,
   },
   registerText: {
     color: COLORS.primary,
     fontWeight: 'bold',
     borderBottomWidth: 1,
-    borderColor: 'orange'
-  }
+    borderColor: 'orange',
+  },
 });
