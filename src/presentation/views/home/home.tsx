@@ -1,17 +1,31 @@
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { useEffect } from 'react';
+import { Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { RootStackParamList } from '../../../../App';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import { COLORS } from '../../theme/app-theme';
 import useHomeViewModel from './use-home-view-model';
 
-export default function HomeScreen() {
+interface Props extends StackScreenProps<RootStackParamList, 'Home'>{}
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+export default function HomeScreen({ navigation, route }: Props) {
 
-  const { email, password, onChange } = useHomeViewModel();
+
+  const { email, password, onChange, errorMessage, login, user } = useHomeViewModel();
+
+  useEffect(() => {
+    if(errorMessage !== '') {
+      ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+    }
+  }, [errorMessage])
+
+  useEffect(() => {
+    if(user?.id !== null && user?.id !== undefined) {
+      console.log(user);
+      navigation.replace('Profile');
+    }
+  }, [user])
 
   return (
     <View style={styles.container}>
@@ -54,7 +68,7 @@ export default function HomeScreen() {
         <View style={{ marginTop: 20 }}>
           <Button
             text='Login'
-            onPress={() => console.log('email', email, 'password', password)}
+            onPress={() => login()}
           />
         </View>
         <View style={styles.formRegister}>
