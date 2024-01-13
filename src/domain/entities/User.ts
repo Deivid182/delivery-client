@@ -1,3 +1,5 @@
+import { type Role } from "./Role"
+
 export interface User {
   id?: number,
   firstName: string,
@@ -8,4 +10,5 @@ export interface User {
   image?: string
   phone: string
   token?: string
+  roles?: Role[]
 }

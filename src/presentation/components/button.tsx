@@ -2,40 +2,35 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native'
 import { COLORS } from '../theme/app-theme'
 
 interface ButtonProps {
-  text: string
   onPress: () => void
+  children: React.ReactNode
+  disabled?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({ text, onPress }) => {
+const Button: React.FC<ButtonProps> = ({ onPress, children, disabled }) => {
   return (
     <TouchableOpacity
+      disabled={disabled}
+      activeOpacity={disabled ? 1 : 0.6}
       onPress={() => onPress()}
       style={styles.button}
     >
-      <Text
-        style={styles.textButton}
-      >
-        {text}
-      </Text>
+      {children}
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
+    flexDirection: 'row',
     width: '100%',
     backgroundColor: COLORS.primary,
     borderRadius: 10,
     padding: 10,
     alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
   },
-  textButton: {
-    color: 'white',
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    fontSize: 16,
-    letterSpacing: 1.5
-  }
 })
 
 export default Button

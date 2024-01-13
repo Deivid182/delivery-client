@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import { View } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import { RootStackParamList } from '../../../../../App';
 import Button from '../../../components/button';
 import userProfileInfoModel from './user-profile-info-view-model';
@@ -12,12 +12,27 @@ const ProfileInfoScreen = ({navigation, route}: Props) => {
 
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 20}}>
-      <Button text="Logout" onPress={() => {
+      <Button 
+        onPress={() => {
         removeSession();
         navigation.navigate('Home');
-      }} />
+      }}>
+        <Text style={styles.textButton}>
+          Log Out
+        </Text>
+      </Button>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 16,
+    letterSpacing: 1.5
+  }
+})
 
 export default ProfileInfoScreen

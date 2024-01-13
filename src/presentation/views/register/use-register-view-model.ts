@@ -3,11 +3,15 @@ import { useState } from 'react';
 import { storage } from '../../../../db';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import { registerAuth } from '../../../domain/use-cases/auth/register-auth';
+import { saveUserLocal } from '../../../domain/use-cases/user-local/save-user-local';
+import { useUserLocal } from '../../hooks/use-user-local';
 
 const useRegisterViewModel = () => {
 
   const [errorMessage, setErrorMessage] = useState('')
   const [file, setFile] = useState<ImagePickerAsset>()
+  const [isLoading, setIsLoading] = useState(false)
+  const { user, getUserSession } = useUserLocal()
   const [values, setValues] = useState({
     firstName: '',
     lastName: '',
@@ -119,16 +123,21 @@ const useRegisterViewModel = () => {
   const register = async () => {
     if(isValidForm()) {
       try {
-        console.log(values);
+        setIsLoading(true)
         const {data, message, success} = await registerAuth(values);
         if(!success) {
           console.log(message);
           setErrorMessage(message)
         } else {
           console.log(data);
+          await saveUserLocal(data)
+          getUserSession()
         }
       } catch (error) {
         console.log(error);
+        setIsLoading(false)
+      } finally {
+        setIsLoading(false)
       }
     }
   }
@@ -141,7 +150,9 @@ const useRegisterViewModel = () => {
     isValidForm,
     onUpload,
     onCameraOpen,
-    file
+    file,
+    user,
+    isLoading
   }
 }
 

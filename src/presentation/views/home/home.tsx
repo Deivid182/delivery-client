@@ -11,8 +11,7 @@ interface Props extends StackScreenProps<RootStackParamList, 'Home'>{}
 
 export default function HomeScreen({ navigation, route }: Props) {
 
-
-  const { email, password, onChange, errorMessage, login, user } = useHomeViewModel();
+  const { email, password, onChange, errorMessage, login, user, isLoading } = useHomeViewModel();
 
   useEffect(() => {
     if(errorMessage !== '') {
@@ -21,6 +20,7 @@ export default function HomeScreen({ navigation, route }: Props) {
   }, [errorMessage])
 
   useEffect(() => {
+    console.log("User: " + user?.id)
     if(user?.id !== null && user?.id !== undefined) {
       console.log(user);
       navigation.replace('Profile');
@@ -67,9 +67,13 @@ export default function HomeScreen({ navigation, route }: Props) {
         />
         <View style={{ marginTop: 20 }}>
           <Button
-            text='Login'
+            disabled={isLoading}
             onPress={() => login()}
-          />
+          >
+            <Text style={styles.textButton}>
+              Login
+            </Text>
+          </Button>
         </View>
         <View style={styles.formRegister}>
           <Text>
@@ -159,5 +163,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     borderBottomWidth: 1,
     borderColor: 'orange'
+  },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 16,
+    letterSpacing: 1.5
   }
 });

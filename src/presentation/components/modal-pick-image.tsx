@@ -27,17 +27,23 @@ const ModalPickImage = ({ openGallery, openCamera, setModalVisible, modalVisible
               Select an option
             </Text>
             <Button
-              text="Open Gallery"
               onPress={() => {
                 setModalVisible(!modalVisible);
                 openGallery();
               }}
-            />
+            >
+              <Text style={styles.textButton}>
+                Open Gallery
+              </Text>
+            </Button>
 
             <Button
-              text="Open Camera"
               onPress={() => openCamera()}
-            />
+            >
+              <Text style={styles.textButton}>
+                Open Camera
+              </Text>
+            </Button>
           </View>
         </View>
       </Modal>
@@ -88,6 +94,13 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
   },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 16,
+    letterSpacing: 1.5
+  }
 });
 
 export default ModalPickImage

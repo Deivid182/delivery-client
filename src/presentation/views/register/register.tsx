@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
 import {
@@ -10,6 +9,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
+  ActivityIndicator
 } from 'react-native';
 import { RootStackParamList } from '../../../../App';
 import Button from '../../components/button';
@@ -17,8 +17,10 @@ import Input from '../../components/input';
 import ModalPickImage from '../../components/modal-pick-image';
 import { COLORS } from '../../theme/app-theme';
 import useRegisterViewModel from './use-register-view-model';
-export default function RegisterScreen() {
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+interface Props extends StackScreenProps<RootStackParamList, 'Register'> {}
+
+export default function RegisterScreen({ navigation, route }: Props) {
   const [modalVisible, setModalVisible] = useState(false)
 
   const {
@@ -33,6 +35,8 @@ export default function RegisterScreen() {
     errorMessage,
     onUpload,
     file,
+    user,
+    isLoading,
     onCameraOpen
   } = useRegisterViewModel();
 
@@ -41,6 +45,14 @@ export default function RegisterScreen() {
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     }
   }, [errorMessage])
+
+  useEffect(() => {
+    if(user?.id !== null && user?.id !== undefined) {
+      console.log(user);
+      navigation.replace('Profile');
+    }
+  }, [user])
+
 
   return (
     <View style={styles.container}>
@@ -56,7 +68,7 @@ export default function RegisterScreen() {
           }}
         >
           {
-            file?.uri === '' ? (
+            !file?.uri ? (
               <Image
                 style={styles.logoImage}
                 source={require('../../../../assets/user_image.png')}
@@ -128,7 +140,14 @@ export default function RegisterScreen() {
             secureTextEntry
           />
           <View style={{ marginTop: 20 }}>
-            <Button text='Confirm' onPress={() => register()} />
+            <Button onPress={() => register()} >
+              <Text style={styles.textButton}>
+                Register
+              </Text>
+              {
+                isLoading ? <ActivityIndicator color="white" /> : null
+              }
+            </Button>
           </View>
           <View style={styles.formRegister}>
             <Text>Already have an account?</Text>
@@ -223,4 +242,11 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: 'orange',
   },
+  textButton: {
+    color: 'white',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    fontSize: 16,
+    letterSpacing: 1.5
+  }
 });
