@@ -5,7 +5,7 @@ import { RootStackParamList } from '../../../../App';
 import Button from '../../components/button';
 import Input from '../../components/input';
 import { COLORS } from '../../theme/app-theme';
-import useHomeViewModel from './use-home-view-model';
+import useHomeViewModel from './view-model';
 
 interface Props extends StackScreenProps<RootStackParamList, 'Home'>{}
 
@@ -22,8 +22,7 @@ export default function HomeScreen({ navigation, route }: Props) {
   useEffect(() => {
     console.log("User: " + user?.id)
     if(user?.id !== null && user?.id !== undefined) {
-      console.log(user);
-      navigation.replace('Profile');
+      user.roles?.length! > 1 ? navigation.replace('Roles') : navigation.replace('Profile');
     }
   }, [user])
 

@@ -2,7 +2,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { View, StyleSheet, Text } from 'react-native';
 import { RootStackParamList } from '../../../../../App';
 import Button from '../../../components/button';
-import userProfileInfoModel from './user-profile-info-view-model';
+import userProfileInfoModel from './view-model';
 
 interface Props extends StackScreenProps<RootStackParamList, 'Profile'> {}
 

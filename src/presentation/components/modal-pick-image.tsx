@@ -75,9 +75,7 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
   button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
+    flex: 1
   },
   buttonOpen: {
     backgroundColor: '#F194FF',
@@ -96,11 +94,13 @@ const styles = StyleSheet.create({
   },
   textButton: {
     color: 'white',
+    width: '100%',
     fontWeight: 'bold',
     textTransform: 'uppercase',
     fontSize: 16,
-    letterSpacing: 1.5
+    letterSpacing: 1.5,
   }
+
 });
 
 export default ModalPickImage

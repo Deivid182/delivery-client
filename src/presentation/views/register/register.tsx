@@ -16,7 +16,7 @@ import Button from '../../components/button';
 import Input from '../../components/input';
 import ModalPickImage from '../../components/modal-pick-image';
 import { COLORS } from '../../theme/app-theme';
-import useRegisterViewModel from './use-register-view-model';
+import useRegisterViewModel from './view-model';
 
 interface Props extends StackScreenProps<RootStackParamList, 'Register'> {}
 
