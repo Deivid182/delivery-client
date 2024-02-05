@@ -1,17 +1,27 @@
 import { View, TouchableOpacity, Image, Text, StyleSheet } from "react-native"
 import { Role } from "../../../../domain/entities/Role"
 import { COLORS } from "../../../theme/app-theme"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "../../../../../App"
 interface Props { 
   role: Role
   height: number
   width: number
+  navigation: StackNavigationProp<RootStackParamList, 'Roles'>
 }
 
-const RolesItem: React.FC<Props> = ({ role, height, width }) => {
+const RolesItem: React.FC<Props> = ({ role, height, width, navigation }) => {
   return (
     <TouchableOpacity
       style={{...styles.container, height: height, width: (width - 50)}}
-      onPress={() => {}}
+      onPress={() => {
+        console.log(role.name);
+        if(role.name === 'RESTAURANT') {
+          navigation.replace('AdminTabsNavigator')
+        } else if(role.name === 'CLIENT') {
+          navigation.replace('ClientTabsNavigator')
+        }
+      }}
     >
       <View style={styles.imageContainer}>
         <Image

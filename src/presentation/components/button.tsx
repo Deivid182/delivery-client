@@ -4,16 +4,19 @@ import { COLORS } from '../theme/app-theme'
 interface ButtonProps {
   onPress: () => void
   children: React.ReactNode
-  disabled?: boolean
+  disabled?: boolean,
+  color?: string,
+  fullWidth?: boolean
+  rounded?: boolean
 }
 
-const Button: React.FC<ButtonProps> = ({ onPress, children, disabled }) => {
+const Button: React.FC<ButtonProps> = ({ onPress, children, disabled, color, fullWidth, rounded }) => {
   return (
     <TouchableOpacity
       disabled={disabled}
       activeOpacity={disabled ? 1 : 0.6}
       onPress={() => onPress()}
-      style={styles.button}
+      style={[styles.button, { backgroundColor: color ? color : COLORS.primary }, { width: fullWidth ? '100%' : 'auto' }, { borderRadius: rounded ? 100 : 10 }]}
     >
       {children}
     </TouchableOpacity>
@@ -23,9 +26,6 @@ const Button: React.FC<ButtonProps> = ({ onPress, children, disabled }) => {
 const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
-    width: '100%',
-    backgroundColor: COLORS.primary,
-    borderRadius: 10,
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',

@@ -49,7 +49,7 @@ export default function RegisterScreen({ navigation, route }: Props) {
   useEffect(() => {
     if(user?.id !== null && user?.id !== undefined) {
       console.log(user);
-      navigation.replace('Profile');
+      navigation.replace('ClientTabsNavigator');
     }
   }, [user])
 

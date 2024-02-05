@@ -22,7 +22,7 @@ export default function HomeScreen({ navigation, route }: Props) {
   useEffect(() => {
     console.log("User: " + user?.id)
     if(user?.id !== null && user?.id !== undefined) {
-      user.roles?.length! > 1 ? navigation.replace('Roles') : navigation.replace('Profile');
+      user.roles?.length! > 1 ? navigation.replace('Roles') : navigation.replace('ClientTabsNavigator');
     }
   }, [user])
 
