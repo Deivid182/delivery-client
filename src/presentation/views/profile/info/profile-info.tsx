@@ -1,5 +1,5 @@
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
-import { View, StyleSheet, Text, Image } from "react-native";
+import { View, StyleSheet, Text, Image, TouchableOpacity } from "react-native";
 import { RootStackParamList } from "../../../../../App";
 import Button from "../../../components/button";
 import userProfileInfoModel from "./view-model";
@@ -17,7 +17,11 @@ const ProfileInfoScreen = () => {
       />
 
       <View style={styles.profileImageContainer}>
-        <Image style={styles.profileImage} source={{ uri: user?.image }} />
+        <TouchableOpacity
+          
+        >
+          <Image style={styles.profileImage} source={{ uri: user?.image }} />
+        </TouchableOpacity>
         <Button
           onPress={() => {
             removeSession();
@@ -67,6 +71,9 @@ const ProfileInfoScreen = () => {
         </View>
         <Button
           onPress={() => {
+            navigation.navigate("ProfileUpdateScreen", {
+              user: user!,
+            });
           }}
           color={COLORS.secondary}
         >
