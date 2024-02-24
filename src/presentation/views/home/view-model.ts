@@ -2,6 +2,7 @@ import { useState } from "react";
 import { loginAuth } from "../../../domain/use-cases/auth/login-auth";
 import { saveUserLocal } from "../../../domain/use-cases/user-local/save-user-local";
 import { useUserLocal } from "../../hooks/use-user-local";
+import { useUser } from "../../context/user-context";
 const useHomeViewModel = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -10,7 +11,8 @@ const useHomeViewModel = () => {
     password: "",
   });
 
-  const { user, getUserSession } = useUserLocal();
+  // const { user, getUserSession } = useUserLocal();
+  const { getUserSession, user, saveUserSession } = useUser()
 
   const onChange = (property: string, value: any) => {
     setValues({
@@ -44,11 +46,11 @@ const useHomeViewModel = () => {
           values.password
         );
         setIsLoading(false);
-        console.log(data);
+        // console.log(data);
         if (!success) {
           setErrorMessage(message);
         } else {
-          await saveUserLocal(data);
+          await saveUserSession(data);
           getUserSession();
         }
       } catch (error) {
