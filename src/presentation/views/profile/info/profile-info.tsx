@@ -5,10 +5,18 @@ import Button from "../../../components/button";
 import userProfileInfoModel from "./view-model";
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../../../theme/app-theme";
+import { useEffect } from "react";
 
 const ProfileInfoScreen = () => {
-  const { removeSession, user } = userProfileInfoModel();
+  const { removeUserSession, user } = userProfileInfoModel();
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    if (user.id === 0) {
+      navigation.replace("Home");
+    }
+  }, [user]);
+
   return (
     <View style={styles.profileContainer}>
       <Image
@@ -17,15 +25,14 @@ const ProfileInfoScreen = () => {
       />
 
       <View style={styles.profileImageContainer}>
-        <TouchableOpacity
-          
-        >
-          <Image style={styles.profileImage} source={{ uri: user?.image }} />
+        <TouchableOpacity>
+          {user.image !== "" && (
+            <Image style={styles.profileImage} source={{ uri: user.image }} />
+          )}
         </TouchableOpacity>
         <Button
           onPress={() => {
-            removeSession();
-            navigation.replace("Home");
+            removeUserSession();
           }}
           color="#fff"
           rounded

@@ -2,7 +2,6 @@ import { ImagePickerAsset, MediaTypeOptions, launchCameraAsync, launchImageLibra
 import { useState } from 'react';
 import { storage } from '../../../../../db';
 import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
-import { registerAuth } from '../../../../domain/use-cases/auth/register-auth';
 import { saveUserLocal } from '../../../../domain/use-cases/user-local/save-user-local';
 import { useUserLocal } from '../../../hooks/use-user-local';
 import { updateUser } from '../../../../domain/use-cases/user/update';
