@@ -6,6 +6,7 @@ import { saveUserLocal } from '../../../../domain/use-cases/user-local/save-user
 import { useUserLocal } from '../../../hooks/use-user-local';
 import { updateUser } from '../../../../domain/use-cases/user/update';
 import { User } from '../../../../domain/entities/User';
+import { useUser } from '../../../context/user-context';
 
 const useUpdateProfileViewModel = (user: User) => {
 
@@ -14,6 +15,7 @@ const useUpdateProfileViewModel = (user: User) => {
   const [isLoading, setIsLoading] = useState(false)
   const { getUserSession } = useUserLocal()
   const [values, setValues] = useState(user);
+  const { saveUserSession } = useUser()
 
   const onChange = (property: string, value: any) => {
     setValues({
@@ -112,8 +114,8 @@ const useUpdateProfileViewModel = (user: User) => {
         setErrorMessage(message)
       } else {
         console.log("data updated", data);
-        await saveUserLocal(data)
-        getUserSession()
+        // await saveUserSession(data)
+        // getUserSession()
       }
     } catch (error) {
       console.log(error);
