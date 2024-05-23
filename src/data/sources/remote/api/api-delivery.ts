@@ -2,7 +2,7 @@ import axios, { AxiosHeaders } from 'axios'
 import { localStorage } from '../../local/local-storage'
 
 export const apiDelivery = axios.create({
-  baseURL: 'http://192.168.0.9:3000/api',
+  baseURL: 'http://192.168.0.8:3000/api',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
